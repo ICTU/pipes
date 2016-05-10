@@ -7,5 +7,5 @@ while true; do
     split($2, a, "/")
     print iface" : "a[1]
   }' | sed "s/^/$(date "+%Y-%m-%d %H:%M:%S") [INFO] /"
- sleep 5
+ sleep 600
 done
