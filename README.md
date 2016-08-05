@@ -1,5 +1,5 @@
 ### Docker-Pipes
-**_Network stacks for service containers_**
+**_Host network stacks for service containers_**
 
 ### Status
 
