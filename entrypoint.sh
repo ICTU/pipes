@@ -1,13 +1,6 @@
-while true; do
- if [[ "$DEBUG" == "true" ]]; then
-  echo "$(date "+%Y-%m-%d %H:%M:%S") [INFO] Available interfaces:"
-  ip addr | awk '
-   /^[0-9]+:/ {
-     sub(/:/,"",$2); iface=$2 }
-   /^[[:space:]]*inet / {
-     split($2, a, "/")
-     print iface" : "a[1]
-   }' | sed "s/^/$(date "+%Y-%m-%d %H:%M:%S") [INFO] /"
- fi
- sleep 60000
+while true ; do
+ if [ "$(ip link show | grep $IF_NAME)" != "" ] ; then break ; fi
+ sleep 2
 done
+
+dhcpcd -B $IF_NAME
