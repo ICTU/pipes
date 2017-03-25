@@ -3,4 +3,4 @@ while true ; do
  sleep 2
 done
 
-dhcpcd -B $IF_NAME
+dhclient -d $IF_NAME

@@ -1,11 +1,10 @@
-FROM alpine:3.5
+FROM centos:7
 
 ENV IF_NAME eth0
 
 ADD entrypoint.sh /entrypoint.sh
 
-RUN apk --no-cache add dhcpcd && \
-    chmod +x /entrypoint.sh && \
-    echo "nohook resolv.conf" >> /etc/dhcpcd.conf
+RUN yum install -y dhclient && \
+    chmod +x /entrypoint.sh
 
 ENTRYPOINT ["sh", "-c", "/entrypoint.sh"]
