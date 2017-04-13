@@ -4,3 +4,4 @@ while true ; do
 done
 
 dhcpcd -B -4 $IF_NAME
+ip a
