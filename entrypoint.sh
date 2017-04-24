@@ -3,5 +3,5 @@ while true ; do
  sleep 2
 done
 
-dhcpcd -B -4 $IF_NAME
+dhcpcd -t 3600 -L -B -4 $IF_NAME
 ip a
