@@ -1,0 +1,7 @@
+# On every new lease put the IP in a file
+
+if [ "$reason" = "BOUND" ]; then
+  ip=$(ip addr show eth0 | grep inet | cut -d '/' -f 1 | awk '{print $2}')
+	echo $ip > /ip.txt
+	exit 0
+fi
