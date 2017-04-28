@@ -9,4 +9,4 @@ RUN apk --no-cache add dhcpcd && \
     chmod +x /entrypoint.sh && \
     echo "nohook resolv.conf" >> /etc/dhcpcd.conf
 
-ENTRYPOINT ["sh", "-c", "/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

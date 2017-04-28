@@ -2,6 +2,7 @@
 
 if [ "$reason" = "BOUND" ]; then
   ip=$(ip addr show eth0 | grep 'inet 10.25' | cut -d '/' -f 1 | awk '{print $2}')
-	echo $ip > /ip.txt
+  echo "$(hostname) | $ip" > $IP_PIPE &
+	echo "$(date)   |   $ip" >> /var/log/dhcpcd.bound.log
 	exit 0
 fi
