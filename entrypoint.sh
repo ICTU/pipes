@@ -5,5 +5,5 @@ while true ; do
  sleep 2
 done
 
-dhcpcd -t 3600 -L -B -4 -e IP_PIPE=$IP_PIPE $IF_NAME
+dhcpcd -t 3600 -L -B -4 -e DNSREG_SOCKET=$DNSREG_SOCKET $IF_NAME
 ip a
