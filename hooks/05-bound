@@ -1,7 +1,7 @@
 # On every new lease put the IP in a file
 
 case "$reason" in
-  BOUND|RENEW|REBIND)
+  BOUND|REBIND)
     ip=$(ip addr show eth0 | grep 'inet 10.25' | cut -d '/' -f 1 | awk '{print $2}')
     echo "$(hostname) | $ip" | nc -U $DNSREG_SOCKET
     echo "$(date)   |   $reason   |   $ip" >> /var/log/dhcpcd.bound.log
