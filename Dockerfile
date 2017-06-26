@@ -1,6 +1,7 @@
-FROM alpine:3.5
+FROM alpine:3.6
 
 ENV IF_NAME eth0
+ENV NET_PREFIX "10\."
 ENV DNSREG_SOCKET /var/run/dnsreg/dnsreg.sock
 
 ADD entrypoint.sh /entrypoint.sh

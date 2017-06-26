@@ -6,5 +6,5 @@ while true ; do
 done
 
 ip a
-dhcpcd -t 3600 -L -B -4 -e DNSREG_SOCKET=$DNSREG_SOCKET $IF_NAME
+dhcpcd -t 3600 -L -B -4 -e DNSREG_SOCKET=$DNSREG_SOCKET -e NET_PREFIX=$NET_PREFIX $IF_NAME
 ip a
