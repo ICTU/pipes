@@ -1,23 +1,27 @@
-machine:
-  services:
-    - docker
+version: 2
 
-dependencies:
-  override:
-    - echo "no install"
+jobs:
+  build_and_push:
+    machine: true
+    steps:
+      - run:
+          shell: /bin/bash
+          command: |
+            docker build -t ictu/pipes:${CIRCLE_TAG} . && \
+            MAJOR_VERSION=${CIRCLE_TAG/.*}; docker tag ictu/pipes:${CIRCLE_TAG} ictu/pipes:${MAJOR_VERSION} && \
+            MINOR_VERSION=${CIRCLE_TAG%.*}; docker tag ictu/pipes:${CIRCLE_TAG} ictu/pipes:${MINOR_VERSION} && \
+            docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS && \
+            docker push ictu/pipes:${CIRCLE_TAG} && \
+            docker push ictu/pipes:${MINOR_VERSION} && \
+            docker push ictu/pipes:${MAJOR_VERSION}
 
-test:
-  override:
-    - echo "no tests!"
-
-deployment:
-  hub:
-    tag: /^[0-9]+\.[0-9]+\.[0-9]+$/
-    commands:
-      - docker build -t ictu/pipes:${CIRCLE_TAG} .
-      - MAJOR_VERSION=${CIRCLE_TAG/.*}; docker tag ictu/pipes:${CIRCLE_TAG} ictu/pipes:${MAJOR_VERSION}
-      - MINOR_VERSION=${CIRCLE_TAG%.*}; docker tag ictu/pipes:${CIRCLE_TAG} ictu/pipes:${MINOR_VERSION}
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push ictu/pipes:${CIRCLE_TAG}
-      - docker push ictu/pipes:${MINOR_VERSION}
-      - docker push ictu/pipes:${MAJOR_VERSION}
+workflows:
+  version: 2
+  build_and_push:
+    jobs:
+      - build_and_push:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+$/
+            branches:
+              ignore: /.*/
