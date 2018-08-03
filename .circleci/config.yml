@@ -4,15 +4,16 @@ jobs:
   build_and_push:
     machine: true
     steps:
+      - checkout
       - run:
           shell: /bin/bash
           command: |
-            docker build -t ictu/pipes:${CIRCLE_TAG} . && \
-            MAJOR_VERSION=${CIRCLE_TAG/.*}; docker tag ictu/pipes:${CIRCLE_TAG} ictu/pipes:${MAJOR_VERSION} && \
-            MINOR_VERSION=${CIRCLE_TAG%.*}; docker tag ictu/pipes:${CIRCLE_TAG} ictu/pipes:${MINOR_VERSION} && \
-            docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS && \
-            docker push ictu/pipes:${CIRCLE_TAG} && \
-            docker push ictu/pipes:${MINOR_VERSION} && \
+            docker build -t ictu/pipes:${CIRCLE_TAG} .
+            MAJOR_VERSION=${CIRCLE_TAG/.*}; docker tag ictu/pipes:${CIRCLE_TAG} ictu/pipes:${MAJOR_VERSION}
+            MINOR_VERSION=${CIRCLE_TAG%.*}; docker tag ictu/pipes:${CIRCLE_TAG} ictu/pipes:${MINOR_VERSION} 
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push ictu/pipes:${CIRCLE_TAG}
+            docker push ictu/pipes:${MINOR_VERSION}
             docker push ictu/pipes:${MAJOR_VERSION}
 
 workflows:
